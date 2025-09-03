@@ -126,25 +126,20 @@ make -B
 ### **🎉 Test Results - ALL TESTS PASSED! 🎉**
 
 ```
-[MAC] operation complete at time            362942000 product=3fff0001 acc=00003fff0001
-[MAC] operation complete at time            379454000 product=a9b6fe7c acc=00007ffe0002
-[MAC] operation complete at time            395966000 product=087c3a80 acc=000029b4fe7e
-396070.01ns INFO     cocotb                             [TEST] test_accumulation_overflow_and_random_stress: done
-396070.01ns INFO     cocotb.regression                  test_accumulation_overflow_and_random_stress passed
-396070.01ns INFO     cocotb.regression                  ***********************************************************************************************************
-                                                        ** TEST                                               STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
-                                                        ***********************************************************************************************************
-                                                        ** test.test_mac_peripheral                            PASS      111250.00           1.71      65045.27  **
-                                                        ** test.test_register_read_write_smoke                 PASS       10430.00          -0.44     -23478.61  **
-                                                        ** test.test_mul_unsigned                              PASS       21440.00           0.33      64140.41  **
-                                                        ** test.test_mac_signed_accumulate                     PASS       36670.00           0.53      68682.26  **
-                                                        ** test.test_saturation_signed                         PASS       36670.00           0.55      67098.77  **
-                                                        ** test.test_signed_extremes                           PASS       62250.00           0.93      67114.42  **
-                                                        ** test.test_shift_rounding_boundaries                 PASS       31160.00           0.48      64966.68  **
-                                                        ** test.test_accumulation_overflow_and_random_stress   PASS       86200.00           1.33      64856.62  **
-                                                        ***********************************************************************************************************
-                                                        ** TESTS=8 PASS=8 FAIL=0 SKIP=0                                  396070.01           5.51      71936.61  **
-                                                        ***********************************************************************************************************
+        ***********************************************************************************************************
+                           ** TEST    STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+        ***********************************************************************************************************
+        ** test.test_mac_peripheral                            PASS      111250.00           1.71      65045.27  **
+        ** test.test_register_read_write_smoke                 PASS       10430.00          -0.44     -23478.61  **
+        ** test.test_mul_unsigned                              PASS       21440.00           0.33      64140.41  **
+        ** test.test_mac_signed_accumulate                     PASS       36670.00           0.53      68682.26  **
+        ** test.test_saturation_signed                         PASS       36670.00           0.55      67098.77  **
+        ** test.test_signed_extremes                           PASS       62250.00           0.93      67114.42  **
+        ** test.test_shift_rounding_boundaries                 PASS       31160.00           0.48      64966.68  **
+        ** test.test_accumulation_overflow_and_random_stress   PASS       86200.00           1.33      64856.62  **
+        ***********************************************************************************************************
+        ** TESTS=8 PASS=8 FAIL=0 SKIP=0                                  396070.01           5.51      71936.61  **
+        ***********************************************************************************************************
 ```
 
 ## Contribution & extension ideas
