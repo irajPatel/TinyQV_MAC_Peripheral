@@ -1,0 +1,63 @@
+# Tiny Tapeout project information
+project:
+  title:        "INT16 Multiply-Accumulate (MAC) Peripheral for TinyQV"      # Project title
+  author:       "Iraj Patel"      # Your name
+  discord:      "iraj_patel"      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
+  description:  "16x16 integer multiply-accumulate peripheral with 48-bit accumulator, rounding and saturation support"      # One line description of what your project does
+  language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
+  clock_hz:     64000000  # Clock frequency in Hz (or 0 if not applicable)
+
+  # How many tiles your design occupies? A single tile is about 167x108 uM.
+  tiles: "1x2"          # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2, 6x2 or 8x2
+
+  # Do not change the top module here.  Instead change tt_wrapper.v line 38 to refer to your module.
+  top_module:  "tt_um_tqv_peripheral_harness"
+
+  # List your project's source files here.
+  # Source files must be in ./src and you must list each source file separately, one per line.
+  # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
+  source_files:
+    - "peripheral.v"
+    - "tt_wrapper.v"
+    - "test_harness/falling_edge_detector.sv"
+    - "test_harness/rising_edge_detector.sv"
+    - "test_harness/reclocking.sv"
+    - "test_harness/spi_reg.sv"
+    - "test_harness/synchronizer.sv"
+
+
+# The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
+# This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SEG_A, etc.).
+pinout:
+  # Inputs
+  ui[0]: "start_operation"    # Start FPU computation
+  ui[1]: "unused"             # Reserved for future use
+  ui[2]: "unused"             # Reserved for future use
+  ui[3]: "unused"             # Reserved for future use
+  ui[4]: "unused"             # Reserved for future use
+  ui[5]: "unused"             # Reserved for future use
+  ui[6]: "unused"             # Reserved for future use
+  ui[7]: "unused"             # Reserved (UART RX)
+
+  # Outputs
+  uo[0]: "unused"             # Reserved (UART TX)
+  uo[1]: "busy_flag"          # FPU busy indicator
+  uo[2]: "error_flag"         # Error occurred
+  uo[3]: "overflow_flag"       # Overflow detected
+  uo[4]: "underflow_flag"      # Underflow detected
+  uo[5]: "operation_done"      # Operation complete
+  uo[6]: "unused"             # Reserved for future use
+  uo[7]: "unused"             # Reserved for future use
+
+  # Bidirectional pins
+  uio[0]: "user_interrupt"    # Interrupt to CPU
+  uio[1]: "data_ready"        # Data ready signal
+  uio[2]: ""                   # Unused
+  uio[3]: "spi_miso"          # SPI MISO
+  uio[4]: "spi_cs_n"          # SPI Chip Select
+  uio[5]: "spi_clk"           # SPI Clock
+  uio[6]: "spi_mosi"          # SPI MOSI
+  uio[7]: ""                   # Unused
+
+# Do not change!
+yaml_version: 6

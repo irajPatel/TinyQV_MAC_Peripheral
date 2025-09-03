@@ -1,0 +1,5 @@
+{
+  "verilog.linting.linter": "verilator",
+  "verilog.formatting.verilogHDL.formatter": "verible-verilog-format",
+  "svn.ignoreMissingSvnWarning": true
+}

@@ -1,0 +1,66 @@
+# Project Structure and Status Summary
+
+## 1. Project Structure Overview
+
+```
+tinyqv-full-peripheral-template/
+├── src/
+│   ├── peripheral.v         # Your floating-point accelerator peripheral (main logic)
+│   ├── tt_wrapper.v         # Test harness: connects SPI, synchronizes inputs, instantiates peripheral
+│   └── test_harness/
+│       ├── spi_reg.sv       # SPI register interface (handles SPI protocol, exposes register bus)
+│       ├── synchronizer.sv  # Synchronizer modules for input signals
+│       └── ...              # Other test harness modules
+├── test/
+│   ├── test.py              # cocotb Python testbench (drives SPI, checks results)
+│   ├── tb.v                 # Verilog testbench (instantiates test harness)
+│   ├── Makefile             # Build and simulation rules
+│   └── ...                  # Test scripts, results, etc.
+├── docs/                    # Documentation
+├── README.md, LICENSE, ...  # Project info
+```
+
+## 2. Communication Flow
+
+- **cocotb test.py** bit-bangs SPI and drives `ui_in` via Python, using the `TinyQV` helper class.
+- **tb.v** instantiates the test harness (`tt_wrapper.v`) and connects all signals.
+- **tt_wrapper.v** synchronizes `ui_in`, routes SPI signals to `spi_reg.sv`, and connects the register bus to your peripheral.
+- **spi_reg.sv** decodes SPI transactions, exposes a register interface (`address`, `data_in`, `data_write_n`, etc.) to your peripheral.
+- **peripheral.v** implements the floating-point accelerator, using the register interface and `ui_in` for control/data.
+
+## 3. What Has Been Achieved
+
+- **Template compliance:**
+  - Peripheral and testbench now follow the TinyQV template structure and interface.
+  - All communication is via the register bus and synchronized `ui_in`.
+- **Testbench robustness:**
+  - cocotb test code assigns the full `ui_in` vector and waits for synchronization.
+  - Register access is via the `TinyQV` helper class, matching the template.
+- **Peripheral logic:**
+  - Register interface for operands, operation, and result is implemented.
+  - SPI and test harness integration is working (register writes and reads succeed).
+  - Floating-point multiplication and simple addition/subtraction pass basic tests.
+
+## 4. What Remains to be Fixed
+
+- **Floating-point adder/subtractor:**
+  - The current `fp_add` function fails for some cases (e.g., `add(1.5, 2.5)`).
+  - The issue is with mantissa alignment and normalization when exponents differ.
+  - Need a more robust IEEE 754 adder/subtractor implementation (or use a reference design).
+- **Edge cases and full compliance:**
+  - Special values (NaN, Inf, denormals) are not handled.
+  - Overflow/underflow/flags may not be fully correct.
+
+## 5. Next Steps / What to Figure Out
+
+- **Fix or replace the floating-point adder/subtractor** to handle all exponent/mantissa cases robustly.
+- **Add more debug output** (in always blocks) if needed to diagnose normalization/alignment issues.
+- **(Optional) Integrate a reference IEEE 754 adder/subtractor** from an open-source project for full compliance.
+- **Test edge cases and status flags** to ensure full IEEE 754 and template compliance.
+
+---
+
+**Summary:**
+- The project structure and communication are now robust and template-compliant.
+- The main remaining issue is the floating-point adder/subtractor logic in `peripheral.v`.
+- Once this is fixed, your design should pass all tests and be ready for submission or further development.
