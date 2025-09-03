@@ -14,18 +14,69 @@ Quick links
 - RTL: `src/peripheral.v`
 - Testbench & sims: `test/test.py`, `test/Makefile`
 
-## Repo structure (what each thing does)
-- `src/`
-  - `peripheral.v` — The INT16 MAC RTL (control, product, 48-bit accumulator, saturation, rounding).
-  - `tt_wrapper.v` — Test wrapper exposing SPI pins and mapping `user_interrupt`/`data_ready` to `uio` lines for the testbench.
-  - `test_harness/` — Helper SV modules used by the wrapper (SPI shift register, synchronizers, edge detectors).
-- `test/`
-  - `test.py` — cocotb test suite that drives the peripheral over the wrapper's SPI interface.
-  - `Makefile`, `tb.v`, and simulation build artifacts are managed here.
-- `docs/`
-  - `info.md` — Peripheral datasheet and register map (updated to describe the INT16 MAC).
-- `info.yaml` — Project metadata used by Tiny Tapeout tools and CI.
+## 🏗️ Project Architecture & File Hierarchy
 
+```
+tinyqv-full-peripheral-template/
+├── 📁 src/                          # Source code directory
+│   ├── 🎯 peripheral.v              # 🆕 OUR MAC IMPLEMENTATION
+│   ├── 🔗 tt_wrapper.v              # Interface wrapper (updated)
+│   ├── ⚙️ config.json               # Project configuration
+│   └── 📦 test_harness/             # SPI communication layer
+│       ├── 📡 spi_reg.sv            # SPI protocol implementation
+│       ├── 🔄 synchronizer.sv       # Signal synchronization
+│       ├── ⬆️ rising_edge_detector.sv # Edge detection
+│       └── ⬇️ falling_edge_detector.sv # Edge detection
+├── 📁 test/                         # Test framework
+│   ├── 🧪 test.py                   # 🆕 OUR COMPREHENSIVE TEST SUITE
+│   ├── 🔌 tqv.py                    # TinyQV interface class
+│   ├── 📊 tqv_reg.py                # SPI communication layer
+│   ├── ⚡ tb.v                      # Testbench top-level
+│   ├── 📈 tb.gtkw                   # GTKWave configuration
+│   └── 🔧 Makefile                  # Build configuration
+├── 📁 docs/                         # Documentation
+│   └── 📋 info.md                   # Project information
+├── 📁 .github/                      # GitHub workflows
+├── 📁 .devcontainer/                # Development environment
+└── 📄 README.md                     # This file
+```
+
+## 🔧 Dependencies & Requirements
+
+### **System Requirements**
+- **OS**: Linux (Ubuntu 20.04+ recommended)
+- **Python**: 3.11+ (required for cocotb compatibility)
+- **Memory**: 4GB+ RAM
+- **Storage**: 2GB+ free space
+
+### **Core Dependencies**
+```bash
+# Python packages (automatically installed)
+pytest==8.3.4          # Testing framework
+cocotb==1.9.2          # Hardware verification framework
+
+# System packages (install with apt)
+iverilog               # Verilog simulator
+gtkwave                # Waveform viewer
+```
+
+### **Installation Commands**
+```bash
+# Update package list
+sudo apt update
+
+# Install Python 3.11 and tools
+sudo apt install python3.11 python3.11-venv
+
+# Install simulation tools
+sudo apt install iverilog gtkwave
+
+# Install Python dependencies
+pip3 install pytest==8.3.4 cocotb==1.9.2
+
+# Add local bin to PATH
+export PATH="$HOME/.local/bin:$PATH"
+```
 ## Peripheral capabilities (short)
 - Operands: `MAC_A` and `MAC_B` (lower 16 bits used)
 - Product: 32-bit at `MAC_PRODUCT` (0x2C)
@@ -85,6 +136,63 @@ Thanks to the many projects and people that make this possible:
 - GTKWave for waveform viewing
 - The TinyQV community and examples from Michael Bell and contributors
 
-Maintainer: Iraj Patel — see `info.yaml` for contact metadata.
+## 📚 Learning Resources
 
-Happy hacking — good luck with your Tiny Tapeout submission! 🎯
+### **🔍 Key Concepts Covered**
+- **Hardware Design**: State machines, counters, edge detection
+- **Interface Design**: Memory-mapped registers, CPU communication
+- **Testing**: Hardware verification, testbench design
+- **System Integration**: Peripheral design, SPI communication
+
+### **📖 Further Reading**
+- [Tiny Tapeout Documentation](https://tinytapeout.com/)
+- [Verilog Best Practices](https://www.verilog.com/)
+- [Hardware Testing with cocotb](https://docs.cocotb.org/)
+- [RISC-V Architecture](https://riscv.org/)
+
+## 🤝 Contributing
+
+### **🐛 Bug Reports**
+Found an issue? Please report it with:
+- Detailed description of the problem
+- Steps to reproduce
+- Expected vs. actual behavior
+- System information
+
+### **💡 Feature Requests**
+Have an idea? We'd love to hear it! Consider:
+- Use case and motivation
+- Implementation approach
+- Impact on existing functionality
+
+### **🔧 Pull Requests**
+Want to contribute? Great! Please:
+- Fork the repository
+- Create a feature branch
+- Add tests for new functionality
+- Ensure all tests pass
+- Submit a pull request
+
+## 📄 License
+
+This project is licensed under the **Apache 2.0 License** - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **Tiny Tapeout Team** for the amazing platform
+- **Michael Bell** for the TinyQV CPU design
+- **cocotb Community** for the excellent testing framework
+- **Open Source Hardware Community** for inspiration
+
+---
+
+
+
+<div align="center">
+
+**Made with ❤️ for the Tiny Tapeout Community**
+
+[⭐ Star this repo](https://github.com/your-repo) | [🐛 Report issues](https://github.com/your-repo/issues) | [💬 Join discussion](https://github.com/your-repo/discussions)
+
+</div>
+
